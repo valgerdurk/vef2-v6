@@ -17,6 +17,8 @@ export default function PageComponent(
 ): JSX.Element {
   const { films } = data;
 
+  console.log(films);
+
   if (!films) {
     return (<p>error</p>);
   }
@@ -36,13 +38,19 @@ export default function PageComponent(
 
 const query = `
   {
-    # TODO sækja gögn um myndir
+    allFilms {
+      films {
+        title
+        episodeID
+        openingCrawl
+        ${characterFragment}
+      }
+    }
   }
-  ${characterFragment}
 `;
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
-  const films = await fetchSwapi<any>(query); // TODO EKKI any
+  const films = await fetchSwapi<IFilm[]>(query);
 
   return {
     props: {

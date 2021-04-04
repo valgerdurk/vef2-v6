@@ -2,7 +2,10 @@
 // þá er gott að hafa á einum stað og sækja alltaf sömu gögnin, lendum þá ekki í að stundum hafi
 // við gögn og stundum ekki.
 export const characterFragment = `
-  fragment character on Person {
-    # TODO velja gögn
+  characterConnection {
+    characters {
+      id
+      name
+    }
   }
 `;

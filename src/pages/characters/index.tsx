@@ -7,7 +7,7 @@ import { fetchCharacters } from '../../lib/swapi';
 import { IPeopleResponse } from '../../types';
 
 export type PageProps = {
-  peopleResponse: any; // TODO EKKI any
+  peopleResponse: Array<IPeopleResponse> | null;
 };
 
 export default function PageComponent(
