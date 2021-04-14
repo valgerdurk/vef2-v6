@@ -4,16 +4,22 @@ import { IFilm } from '../../types';
 import s from './Film.module.scss';
 
 type Props = {
-
+  film: IFilm;
 };
 
-// TODO: Þetta er eitthvað off
-export function Film({  }: Props): JSX.Element {
+export function Film({ film  }: Props): JSX.Element {
   return (
     <section className={s.film}>
       <h2 className={s.film__title}>
-        Episode X
+        {`Episode ${film.episodeID}: ${film.title}`}
       </h2>
+      <p className={s.film__text}>
+        {`${film.openingCrawl}`}
+      </p>
+      <h3>Characters</h3>
+      <p className={s.film__characters}>
+        {`${film.characters}`}
+      </p>
     </section>
   );
 }

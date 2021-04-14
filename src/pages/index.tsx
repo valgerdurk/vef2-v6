@@ -30,7 +30,7 @@ export default function PageComponent(
       </Head>
       <h1>Star Wars films</h1>
       {films.map((film, i) => (
-        <Film key={i} />
+        <Film key={i} film={film} />
       ))}
     </Layout>
   );
@@ -50,11 +50,11 @@ const query = `
 `;
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
-  const films = await fetchSwapi<IFilm[]>(query);
+  const films = await fetchSwapi<any>(query); // TODO: Hvað á að vera í staðinn fyrir any??
 
   return {
     props: {
-      films,
+      films: films?.allFilms?.films ?? null,
     },
   };
 };
