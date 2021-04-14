@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
 import s from './Characters.module.scss';
 import { Button } from '../button/Button';
 import { ICharacter } from '../../types';
+import { IPeopleResponse } from '../../types';
 
 type Props = {
+  peopleResponse: IPeopleResponse;
 };
 
 /**
@@ -24,7 +26,7 @@ type Props = {
  */
 type ExcludesFalse = <T>(x: T | null | undefined | false) => x is T;
 
-export function Characters({ }: Props): JSX.Element {
+export function Characters({ peopleResponse }: Props): JSX.Element {
   // TODO meðhöndla loading state, ekki þarf sérstaklega að villu state
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -32,6 +34,16 @@ export function Characters({ }: Props): JSX.Element {
   const [characters, setCharacters] = useState<Array<ICharacter>>([]);
 
   const [nextPage, setNextPage] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function showCharacterList() {
+      const res = peopleResponse;
+
+      setCharacters(res.people);
+      setNextPage(res.pageInfo.endCursor);
+    }
+    showCharacterList();
+  }, [peopleResponse]);
 
   const fetchMore = async (): Promise<void> => {
     // TODO sækja gögn frá /pages/api/characters.ts (gegnum /api/characters), ef það eru fleiri

@@ -43,10 +43,15 @@ const query = `
         title
         episodeID
         openingCrawl
-        ${characterFragment}
+        characterConnection {
+          characters {
+            ...character
+          }
+        }
       }
     }
   }
+  ${characterFragment}
 `;
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async () => {

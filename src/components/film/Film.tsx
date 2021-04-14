@@ -17,9 +17,13 @@ export function Film({ film  }: Props): JSX.Element {
         {`${film.openingCrawl}`}
       </p>
       <h3>Characters</h3>
-      <p className={s.film__characters}>
-        {`${film.characters}`}
-      </p>
+      <div className={s.film__characters}>
+        {film.characterConnection.characters.map((character, i) => (
+          <Link key={i} href={`/characters/${character.id}`}>
+            {character.name}
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }
