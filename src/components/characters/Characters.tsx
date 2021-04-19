@@ -27,13 +27,12 @@ type Props = {
 type ExcludesFalse = <T>(x: T | null | undefined | false) => x is T;
 
 export function Characters({ peopleResponse }: Props): JSX.Element {
-  // TODO meðhöndla loading state, ekki þarf sérstaklega að villu state
+
   const [loading, setLoading] = useState<boolean>(false);
 
-  // TODO setja grunngögn sem koma frá server
-  const [characters, setCharacters] = useState<Array<ICharacter>>([]);
-
-  const [nextPage, setNextPage] = useState<string | null>(null);
+  const [characters, setCharacters] = useState<Array<ICharacter>>(peopleResponse.people);
+  const [hasNext, setNext] = useState<boolean>(peopleResponse.pageInfo.hasNextPage);
+  const [nextPage, setNextPage] = useState<string | null>(peopleResponse.pageInfo.endCursor);
 
   useEffect(() => {
     async function showCharacterList() {
@@ -46,9 +45,24 @@ export function Characters({ peopleResponse }: Props): JSX.Element {
   }, [peopleResponse]);
 
   const fetchMore = async (): Promise<void> => {
-    // TODO sækja gögn frá /pages/api/characters.ts (gegnum /api/characters), ef það eru fleiri
-    // (sjá pageInfo.hasNextPage) með cursor úr pageInfo.endCursor
+    setLoading(true);
+
+    const res = await fetch(`/api/characters?after=${nextPage}`);
+    const data = await res.json();
+
+    setCharacters(characters.concat(data.allPeople.people));
+    setNextPage(data.allPeople.pageInfo.endCursor);
+    setNext(data.allPeople.pageInfo.hasNextPage);
+
+    setLoading(false);
   };
+
+  characters.map((character) => {
+    if(!character) {
+      return null;
+    }
+    return character;
+  }).filter((Boolean as unknown) as ExcludesFalse);
 
   return (
     <section className={s.characters}>
@@ -59,8 +73,8 @@ export function Characters({ peopleResponse }: Props): JSX.Element {
           </li>
         ))}
       </ul>
-
-      <Button disabled={loading} onClick={fetchMore}>Fetch more</Button>
+      { loading && <p>Fetching....</p>}    
+      { hasNext && <Button disabled={loading} onClick={fetchMore}>Fetch more</Button>}
     </section>
   );
 }
