@@ -1,4 +1,35 @@
 
 .film {
-  
+    border-bottom: 2px solid lightgray;
+    padding: 1rem 0 2rem 0;
+
+    &__title {
+        margin-bottom: 1rem;
+    }
+
+    &__information {
+        display: flex;
+        flex-direction: row;
+    }    
+
+    &__text {
+        font-family:'Courier New', Courier, monospace;
+        font-weight: bold;
+        margin-right: 3rem;
+        width: 30%;
+    }
+
+    &__characters {
+        width: 70%;
+    }
+
+    &__names {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    &__name {
+        padding-right: 1rem;
+    }
 }
