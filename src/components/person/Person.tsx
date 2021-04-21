@@ -20,7 +20,9 @@ export function Person({ person }: Props): JSX.Element {
       <p>{person.height}</p>
       <h4>Mass:</h4>
       <p>{person.mass}</p>
-      <Link href="/characters">Back to characters</Link>
+      <div className={s.person__link}>
+        <Link href="/characters">Back to characters</Link>
+      </div>
     </div>
   );
 }
