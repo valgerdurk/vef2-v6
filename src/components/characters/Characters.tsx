@@ -30,16 +30,16 @@ export function Characters({ peopleResponse }: Props): JSX.Element {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [characters, setCharacters] = useState<Array<ICharacter>>(peopleResponse.people);
-  const [hasNext, setNext] = useState<boolean>(peopleResponse.pageInfo.hasNextPage);
-  const [nextPage, setNextPage] = useState<string | null>(peopleResponse.pageInfo.endCursor);
+  const [characters, setCharacters] = useState<Array<ICharacter>>(peopleResponse.allPeople.people);
+  const [hasNext, setNext] = useState<boolean>(peopleResponse.allPeople.pageInfo.hasNextPage);
+  const [nextPage, setNextPage] = useState<string | null>(peopleResponse.allPeople.pageInfo.endCursor);
 
   useEffect(() => {
     async function showCharacterList() {
       const res = peopleResponse;
 
-      setCharacters(res.people);
-      setNextPage(res.pageInfo.endCursor);
+      setCharacters(res.allPeople.people);
+      setNextPage(res.allPeople.pageInfo.endCursor);
     }
     showCharacterList();
   }, [peopleResponse]);

@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
 
   return {
     props: {
-      peopleResponse: peopleResponse?.allPeople ?? null,
+      peopleResponse: peopleResponse ?? null,
     },
   };
 };

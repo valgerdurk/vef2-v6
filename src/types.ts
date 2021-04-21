@@ -22,6 +22,10 @@ interface ICharacterConnection {
 }
 
 export interface IPeopleResponse {
+  allPeople: IAllPeople;
+}
+
+interface IAllPeople {
   people: ICharacter[];
   pageInfo: IPaging;
 }
