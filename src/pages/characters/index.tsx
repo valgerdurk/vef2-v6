@@ -26,7 +26,6 @@ export default function PageComponent(
 }
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
-  // TODO sækja karaktera
   const peopleResponse = await fetchCharacters('');
 
   return {

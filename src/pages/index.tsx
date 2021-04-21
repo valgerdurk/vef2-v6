@@ -6,18 +6,16 @@ import { Film } from '../components/film/Film';
 import { Layout } from '../components/layout/Layout';
 import { characterFragment } from '../graphql/characterFragment';
 import { fetchSwapi } from '../lib/swapi';
-import { IFilm } from '../types';
+import { IAllFilms, IFetchFilms } from '../types';
 
 export type PageProps = {
-  films: Array<IFilm> | null;
+  films: IAllFilms | null;
 };
 
 export default function PageComponent(
   data: InferGetServerSidePropsType<typeof getServerSideProps>,
 ): JSX.Element {
   const { films } = data;
-
-  console.log(films);
 
   if (!films) {
     return (<p>error</p>);
@@ -29,7 +27,7 @@ export default function PageComponent(
         <title>Star Wars films</title>
       </Head>
       <h1>Star Wars films</h1>
-      {films.map((film, i) => (
+      {films.films.map((film, i) => (
         <Film key={i} film={film} />
       ))}
     </Layout>
@@ -55,11 +53,11 @@ const query = `
 `;
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
-  const films = await fetchSwapi<any>(query); // TODO: Hvað á að vera í staðinn fyrir any??
+  const films = await fetchSwapi<IFetchFilms>(query); 
 
   return {
     props: {
-      films: films?.allFilms?.films ?? null,
+      films: films.allFilms ?? null, 
     },
   };
 };
