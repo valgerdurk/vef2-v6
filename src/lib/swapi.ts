@@ -31,7 +31,6 @@ export async function fetchSwapi<T>(
 
   if (!result.ok) {
     console.info(await result.text());
-    console.log(result);
     throw new Error(`Error fetching from SWAPI, non 200 status: ${result.status}`);
   }
 

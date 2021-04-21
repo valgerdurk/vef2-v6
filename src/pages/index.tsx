@@ -53,11 +53,11 @@ const query = `
 `;
 
 export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
-  const films = await fetchSwapi<IFetchFilms>(query); 
+  const films = await fetchSwapi<IFetchFilms>(query);
 
   return {
     props: {
-      films: films.allFilms ?? null, 
+      films: films.allFilms ?? null,
     },
   };
 };

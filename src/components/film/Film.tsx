@@ -7,7 +7,7 @@ type Props = {
   film: IFilm;
 };
 
-export function Film({ film  }: Props): JSX.Element {
+export function Film({ film }: Props): JSX.Element {
   return (
     <section className={s.film}>
       <h2 className={s.film__title}>
@@ -24,8 +24,8 @@ export function Film({ film  }: Props): JSX.Element {
               <div className={s.film__name}>
                 <Link key={i} href={`/characters/${character.id}`}>
                   {character.name}
-                </Link> 
-              </div> 
+                </Link>
+              </div>
             ))}
           </div>
         </div>

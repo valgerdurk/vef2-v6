@@ -20,7 +20,7 @@ export default function PageComponent(
         <title>Star Wars characters</title>
       </Head>
       <h1>Star Wars characters</h1>
-      <Characters peopleResponse={peopleResponse}/>
+      <Characters peopleResponse={peopleResponse} />
     </Layout>
   );
 }

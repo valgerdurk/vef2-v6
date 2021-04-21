@@ -4,8 +4,7 @@ import Link from 'next/link';
 
 import s from './Characters.module.scss';
 import { Button } from '../button/Button';
-import { ICharacter } from '../../types';
-import { IPeopleResponse } from '../../types';
+import { IPeopleResponse, ICharacter } from '../../types';
 
 type Props = {
   peopleResponse: IPeopleResponse;
@@ -27,12 +26,13 @@ type Props = {
 type ExcludesFalse = <T>(x: T | null | undefined | false) => x is T;
 
 export function Characters({ peopleResponse }: Props): JSX.Element {
-
   const [loading, setLoading] = useState<boolean>(false);
 
   const [characters, setCharacters] = useState<Array<ICharacter>>(peopleResponse.allPeople.people);
   const [hasNext, setNext] = useState<boolean>(peopleResponse.allPeople.pageInfo.hasNextPage);
-  const [nextPage, setNextPage] = useState<string | null>(peopleResponse.allPeople.pageInfo.endCursor);
+  const [nextPage, setNextPage] = useState<string | null>(
+    peopleResponse.allPeople.pageInfo.endCursor,
+  );
 
   useEffect(() => {
     async function showCharacterList() {
@@ -58,7 +58,7 @@ export function Characters({ peopleResponse }: Props): JSX.Element {
   };
 
   characters.map((character) => {
-    if(!character) {
+    if (!character) {
       return null;
     }
     return character;
@@ -73,7 +73,7 @@ export function Characters({ peopleResponse }: Props): JSX.Element {
           </li>
         ))}
       </ul>
-      { loading && <p>Fetching....</p>}    
+      { loading && <p>Fetching....</p>}
       { hasNext && <Button disabled={loading} onClick={fetchMore}>Fetch more</Button>}
     </section>
   );
